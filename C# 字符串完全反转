@@ -1,0 +1,7 @@
+public class Solution {
+    public string ReverseString(string s) {
+        char[] arry=s.ToCharArray();
+        Array.Reverse(arry);
+        return new string(arry);
+    }
+}
