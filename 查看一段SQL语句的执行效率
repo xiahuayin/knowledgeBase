@@ -1,0 +1,14 @@
+SET STATISTICS io ON
+SET STATISTICS time ON
+go
+        ---你要测试的sql语句
+    select 
+		sum(case when isReplay = 20 then 1 else 0 end) as recordCount1,    
+		sum(case when isReplay<>'' then 1 else 0 end) as recordCount2,
+		Convert(varchar(100),cast(round(100.0 * sum(case when isReplay = 20 then 1 else 0 end) / sum(case when isReplay<>'' then 1 else 0 end) , 2) as numeric(10, 2)))+'%' as ReplyPer_Comment
+		from appraise(nolock) 
+		where hotelId in (select hotelId from hotel(nolock) where depart_area_id='3411e512-984e-40bc-b0e6-8324b51aeff8' and depart_city_id ='fc8e5c32-4693-40d6-9c61-1d7144e7c57c')
+go
+SET STATISTICS profile OFF
+SET STATISTICS io OFF
+SET STATISTICS time OFF
